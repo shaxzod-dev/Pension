@@ -6,8 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install"
   },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "eslint --cache --fix",
+    "*.{json,md,css,scss}": "prettier --write"
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {},
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -29,6 +44,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"

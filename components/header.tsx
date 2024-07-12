@@ -14,11 +14,25 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Spinner } from "./ui/spinner";
-import { Terminal } from "lucide-react";
+import { Terminal, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const Header = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [alert, setAlert] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
-  const [tel, setTel] = useState<string>("");
+  const [tel, setTel] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const token: string = "7294055329:AAGMBt-z0wTt4wqBQVFpHtgLWKnnTUq-mE4";
   const chatId: number = 5015798580;
@@ -34,9 +48,17 @@ const Header = () => {
       setLoading(false);
       setEmail("");
       setTel("");
-      alert("Имя и номер телефона отправлены!");
+      setOpen(false);
+      setAlert(true);
     }
   }
+  const handleChange = () => {
+    setOpen(!open);
+  };
+  const handleClose = () => {
+    setAlert(false);
+  };
+
   return (
     <header className="my-5">
       <div className="container">
@@ -88,15 +110,25 @@ const Header = () => {
               </a>
             </div>
 
-            <Dialog>
-              <DialogTrigger asChild>
-                {/* <Button variant="outline">Edit Profile</Button> */}
-                <button className="py-6 px-12 text-[rgb(255,255,255)] text-xl font-medium leading-6  rounded-[40px] bg-primary shadow-custom">
-                  Заказать звонок
-                </button>
-              </DialogTrigger>
+            <Dialog open={open}>
+              {/* <DialogTrigger> */}
+              <button
+                onClick={handleChange}
+                className="py-6 px-12 text-[rgb(255,255,255)] text-xl font-medium leading-6  rounded-[40px] bg-primary shadow-custom"
+              >
+                Заказать звонок
+              </button>
+              {/* </DialogTrigger> */}
+
               <DialogContent className="sm:max-w-[570px]">
                 <DialogHeader>
+                  <DialogClose
+                    onClick={handleChange}
+                    className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                  >
+                    <X className="h-7 w-7" />
+                    <span className="sr-only">Close</span>
+                  </DialogClose>
                   <DialogTitle>Заказать звонок</DialogTitle>
                   <DialogDescription>
                     Заполните форму и мы вам перезвоним
@@ -108,6 +140,7 @@ const Header = () => {
                     className="grid  items-center gap-4"
                   >
                     <Input
+                      id="nameInput"
                       type="text"
                       name="name"
                       value={email}
@@ -119,7 +152,7 @@ const Header = () => {
                     />
                     <Input
                       type="tel"
-                      inputMode="numeric"
+                      id="telInput"
                       name="tel"
                       value={tel}
                       disabled={loading}
@@ -146,6 +179,31 @@ const Header = () => {
                 </DialogFooter> */}
               </DialogContent>
             </Dialog>
+            <AlertDialog open={alert}>
+              {/* <AlertDialogTrigger asChild>
+                <Button variant="outline">Show Dialog</Button>
+              </AlertDialogTrigger> */}
+              <AlertDialogContent className="sm:max-w-[570px]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-[25px]">
+                    Имя и номер телефона отправлены!
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-lg">
+                    Ждите нашего звонка!
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  {/* <AlertDialogAction> */}
+                  <button
+                    className="mt-10 py-3 px-5 text-[rgb(255,255,255)] text-lg rounded-[34px] bg-primary shadow-custom"
+                    onClick={handleClose}
+                  >
+                    Продолжить
+                  </button>
+                  {/* </AlertDialogAction> */}
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>
