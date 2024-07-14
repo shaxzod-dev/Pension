@@ -18,12 +18,23 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        xs: "375px",
+        sm: "600px",
+        sd: "700px",
+        md: "750px",
+        mg: "800px",
+        "3xl": "1650px",
+        "4xl": "2000px",
+      },
       boxShadow: {
         custom: "0px 12px 12px 0px rgba(42, 124, 48, 0.34)",
       },
       backgroundImage: {
-        "custom-gradient":
-          "linear-gradient(102deg,rgba(61,184,70,0)0%,rgb(61,184,70)50%,rgba(61,184,70,0)100%),rgb(68,124,42)",
+        "xs-banner-img":
+          "url('https://firebasestorage.googleapis.com/v0/b/forest-estate.appspot.com/o/image-1.png?alt=media&token=d45c89c1-c934-4b2d-8de3-4a694c3a9e89')",
+        "banner-img":
+          "url('https://firebasestorage.googleapis.com/v0/b/forest-estate.appspot.com/o/Image-00.png?alt=media&token=931ba83f-a513-4a78-b6b0-efaa6c202510')",
       },
 
       colors: {

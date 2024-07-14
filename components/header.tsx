@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Icons } from "~/assets/icons";
-import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,10 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
 import { Spinner } from "./ui/spinner";
-import { Terminal, X } from "lucide-react";
+import { Icon, Terminal, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,99 +24,149 @@ import {
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { Span } from "next/dist/trace";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/ui/sheet";
 
 const Header = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [burgerOpen, setBurgerOpen] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [tel, setTel] = useState<string>();
+  const [name, setName] = useState<string>("");
+  const [tel, setTel] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const token: string = "7294055329:AAGMBt-z0wTt4wqBQVFpHtgLWKnnTUq-mE4";
   const chatId: number = 5015798580;
   async function OnSubmit(e: any) {
     setLoading(!loading);
     e.preventDefault();
-    const message = `Email: ${email},Tel: ${tel}`;
+    const message = `Email: ${name},Tel: ${tel}`;
     const chatMessage = `chat_id=${chatId}`;
     const res = await fetch(
       `https://api.telegram.org/bot${token}/sendMessage?text=${message}&${chatMessage}`
     );
     if (res.status == 200) {
       setLoading(false);
-      setEmail("");
+      setName("");
       setTel("");
       setOpen(false);
       setAlert(true);
     }
   }
+  const validateName = (name: string): boolean => {
+    const namePattern: RegExp = /^[a-zA-Z\s']+$/;
+
+    if (name.length !== 0 && namePattern.test(name) == false) {
+      return false;
+    }
+
+    if (name.length > 50) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateNumber = (tel: string): boolean => {
+    const phonePattern: RegExp = /^\+\d{7,}$/;
+    return tel.length !== 0 ? phonePattern.test(tel) : true;
+  };
+
   const handleChange = () => {
     setOpen(!open);
   };
+
+  const handleBurger = () => {
+    setBurgerOpen(!burgerOpen);
+  };
+
   const handleClose = () => {
     setAlert(false);
   };
-
   return (
-    <header className="my-5">
+    <header
+      className={
+        burgerOpen == false
+          ? `xs:max-sm:py-2.5 py-5`
+          : "xs:max-sm:py-[25.5px] py-5 md:max-xl:py-[55.5px] sm:max-md:py-[35.5px]"
+      }
+    >
       <div className="container">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-x-4">
-            <Icons.LogoIcon />
-            <div className="flex flex-col ">
-              <Icons.TitleIcon />
-              <h5>Резиденция для пожилых</h5>
+          {burgerOpen == false && (
+            <div className="xs:max-md:flex hidden">
+              <Icons.SmallLogoIcon />
             </div>
-          </div>
-          <nav className="flex items-center gap-x-12">
+          )}
+          {burgerOpen == false && (
+            <div className="md:flex hidden">
+              <Icons.MainLogoIcon />
+            </div>
+          )}
+          <nav className="xs:max-xl:hidden flex items-center xl:max-2xl:gap-x-6 gap-x-12">
             <a
               href="#!"
-              className="text-[22px] font-medium text-title leading-7"
+              className=" xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
             >
               О нас
             </a>
             <a
               href="#!"
-              className="text-[22px] font-medium text-title leading-7"
+              className="xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
             >
               Услуги
             </a>
             <a
               href="#!"
-              className="text-[22px] font-medium text-title leading-7"
+              className="xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
             >
               Специалисты
             </a>
             <a
               href="#!"
-              className="text-[22px] font-medium text-title leading-7"
+              className="xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
             >
               Контакты
             </a>
           </nav>
-
           <div className="flex items-center gap-x-6">
-            <div className="flex flex-col">
-              <h3 className="text-title font-medium leading-5">
+            <div className="xs:max-xl:hidden flex flex-col">
+              <h3 className="xl:max-2xl:text-base text-title font-medium leading-5">
                 Есть номер! Звоните
               </h3>
               <a
                 href="tel:+74957977735"
-                className="text-title text-[25px] font-medium leading-8"
+                className="xl:max-2xl:text-xl text-title text-[25px] font-medium leading-8"
               >
                 +7 495 797 77 35
               </a>
             </div>
-
             <Dialog open={open}>
-              {/* <DialogTrigger> */}
               <button
                 onClick={handleChange}
-                className="py-6 px-12 text-[rgb(255,255,255)] text-xl font-medium leading-6  rounded-[40px] bg-primary shadow-custom"
+                className="xl:max-2xl:text-lg xl:max-2xl:py-4 xl:max-2xl:px-8 xs:max-xl:hidden flex py-6 px-12 text-[rgb(255,255,255)] text-xl font-medium leading-6  rounded-[40px] bg-primary shadow-custom"
               >
                 Заказать звонок
               </button>
-              {/* </DialogTrigger> */}
-
+              {burgerOpen == false && (
+                <button
+                  onClick={handleChange}
+                  className="hidden xs:max-xl:flex"
+                >
+                  <Icons.CallIcon />
+                </button>
+              )}
               <DialogContent className="sm:max-w-[570px]">
                 <DialogHeader>
                   <DialogClose
@@ -129,27 +176,36 @@ const Header = () => {
                     <X className="h-7 w-7" />
                     <span className="sr-only">Close</span>
                   </DialogClose>
-                  <DialogTitle>Заказать звонок</DialogTitle>
-                  <DialogDescription>
+                  <DialogTitle className="xs:max-xl:text-2xl">
+                    Заказать звонок
+                  </DialogTitle>
+                  <DialogDescription className="xs:max-xl:text-lg">
                     Заполните форму и мы вам перезвоним
                   </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-6 px-12">
+                <div className="grid gap-4 py-6 px-12 xs:max-xl:px-7">
                   <form
                     onSubmit={(e) => OnSubmit(e)}
-                    className="grid  items-center gap-4"
+                    className="grid items-center gap-4"
                   >
                     <Input
                       id="nameInput"
                       type="text"
                       name="name"
-                      value={email}
+                      value={name}
                       disabled={loading}
                       required
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => setName(e.target.value)}
                       placeholder="Имя"
-                      className="py-7 pl-7 rounded-[34px] text-lg bg-[rgb(239,239,239)]"
+                      className="xs:max-xl:py-6 xs:max-xl:pl-6 py-7 pl-7 rounded-[34px] text-lg bg-[rgb(239,239,239)]"
                     />
+                    {validateName(name) == false ? (
+                      <span className="xs:max-xl:text-xs text-lg text-red-600">
+                        Не правильный формат имени!
+                      </span>
+                    ) : (
+                      ""
+                    )}
                     <Input
                       type="tel"
                       id="telInput"
@@ -159,51 +215,144 @@ const Header = () => {
                       required
                       onChange={(e) => setTel(e.target.value)}
                       placeholder="Номер телефона"
-                      className="py-7 pl-7 rounded-[34px] text-lg bg-[rgb(239,239,239)]"
+                      className="xs:max-xl:py-6 xs:max-xl:pl-6  py-7 pl-7 rounded-[34px] text-lg bg-[rgb(239,239,239)]"
                     />
-                    {/* <Spinner /> */}
-                    <button className="py-6 px-7 text-[rgb(255,255,255)] text-lg rounded-[34px] bg-primary shadow-custom">
-                      {loading ? <Spinner /> : "Заказать звонок"}
-                    </button>
+                    {tel.length !== 0 && validateNumber(tel) == false ? (
+                      <span className="xs:max-xl:text-xs text-lg text-red-600">
+                        Не правильный формат номера телефона
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {validateName(name) == false ||
+                    validateNumber(tel) == false ? (
+                      <button
+                        disabled={true}
+                        className="xs:max-xl:py-4 xs:max-xl:px-6 disabled:bg-[rgb(173,198,153)] py-6 px-7 text-[rgb(255,255,255)] text-lg rounded-[34px] bg-primary shadow-custom"
+                      >
+                        Заказать звонок
+                      </button>
+                    ) : (
+                      <button
+                        disabled={loading}
+                        className="xs:max-xl:py-4 xs:max-xl:px-6 disabled:bg-[rgb(173,198,153)] py-6 px-7 text-[rgb(255,255,255)] text-lg rounded-[34px] bg-primary shadow-custom"
+                      >
+                        {loading ? <Spinner /> : "Заказать звонок"}
+                      </button>
+                    )}
                   </form>
                 </div>
-                {/* <DialogFooter className="flex items-center gap-2 px-20">
-                  <input
-                    type="checkbox"
-                    checked
-                    name="agree"
-                    required
-                    className="bg-primary w-10 h-10"
-                  />
-                  Вы соглашаетесь с условиями обработки персональных данных
-                </DialogFooter> */}
               </DialogContent>
             </Dialog>
             <AlertDialog open={alert}>
-              {/* <AlertDialogTrigger asChild>
-                <Button variant="outline">Show Dialog</Button>
-              </AlertDialogTrigger> */}
               <AlertDialogContent className="sm:max-w-[570px]">
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-[25px]">
+                  <AlertDialogTitle className="xs:max-xl:text-xl text-[25px]">
                     Имя и номер телефона отправлены!
                   </AlertDialogTitle>
-                  <AlertDialogDescription className="text-lg">
+                  <AlertDialogDescription className="text-base">
                     Ждите нашего звонка!
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  {/* <AlertDialogAction> */}
                   <button
-                    className="mt-10 py-3 px-5 text-[rgb(255,255,255)] text-lg rounded-[34px] bg-primary shadow-custom"
+                    className="xs:max-xl:mt-5 mt-10 xs:max-xl:py-2 xs:max-xl:px-2 py-3 px-5 text-[rgb(255,255,255)] text-lg rounded-[34px] bg-primary shadow-custom"
                     onClick={handleClose}
                   >
                     Продолжить
                   </button>
-                  {/* </AlertDialogAction> */}
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+            {burgerOpen == false && (
+              <button className="gap-2 xl:hidden" onClick={handleBurger}>
+                <Icons.BurgerMenuIcon />
+              </button>
+            )}
+            <Sheet open={burgerOpen}>
+              <SheetContent
+                side={"right"}
+                className=" overflow-y-auto pb-[145px] min-h-screen bg-[rgba(252,252,252,0.87)] size-full "
+              >
+                <SheetHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="xs:max-xl:flex hidden">
+                      <Icons.SmallLogoIcon />
+                    </div>
+                    <div className="flex items-center gap-x-6">
+                      <button
+                        onClick={handleChange}
+                        className="hidden xs:max-xl:flex"
+                      >
+                        <Icons.CallIcon />
+                      </button>
+                      <button onClick={handleBurger}>
+                        <Icons.XIcons />
+                      </button>
+                    </div>
+                  </div>
+                </SheetHeader>
+                <nav className="flex flex-col gap-y-8 mt-8">
+                  <a
+                    href="#!"
+                    className="pb-7 border-[rgb(214,214,214)] border-b xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
+                  >
+                    О нас
+                  </a>
+                  <a
+                    href="#!"
+                    className="pb-7 border-[rgb(214,214,214)] border-b xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
+                  >
+                    Услуги
+                  </a>
+                  <a
+                    href="#!"
+                    className="pb-7 border-[rgb(214,214,214)] border-b xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
+                  >
+                    Специалисты
+                  </a>
+                  <a
+                    href="#!"
+                    className="pb-7 border-[rgb(214,214,214)] border-b xl:max-2xl:text-base text-[22px] font-medium text-title leading-7"
+                  >
+                    Контакты
+                  </a>
+                </nav>
+                <div className="pb-7 border-[rgb(214,214,214)] border-b">
+                  <h3 className="mt-8 xl:max-2xl:text-base text-[22px] font-medium text-title leading-7">
+                    Телефон
+                  </h3>
+                  <a
+                    href="tel:+74957977735"
+                    className="gap-x-3 flex items-center gap-y-3 text-title text-[25px] font-medium leading-8"
+                  >
+                    <Icons.CallIcon />
+                    +7 495 797 77 35
+                  </a>
+                  <div className="flex items-center mt-4 gap-x-5">
+                    <Icons.BanerCircleIcon />{" "}
+                    <span>Звоните, Пн-Пт с 9:00-18:00</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="xl:max-2xl:text-base text-[22px] font-medium text-title leading-7">
+                    Пишите онлайн
+                  </h3>
+                  <div className="flex items-center gap-x-2 mt-2">
+                    <a href="https://web.whatsapp.com/" target="_blank">
+                      <Icons.WhatsAppIcon />
+                    </a>
+                    <a href="https://web.telegram.org" target="_blank">
+                      <Icons.TelegramIcon />
+                    </a>
+                    <a href="https://web.whatsapp.com/" target="_blank">
+                      <Icons.NormalWhatsAppIcon />
+                    </a>
+                  </div>
+                </div>
+                <SheetFooter></SheetFooter>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
