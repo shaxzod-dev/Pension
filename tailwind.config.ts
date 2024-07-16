@@ -24,8 +24,10 @@ const config = {
         sd: "700px",
         md: "750px",
         mg: "800px",
-        "3xl": "1650px",
-        "4xl": "2000px",
+        "3xl": "1350px",
+        "4xl": "1450px",
+        "5xl": "1550px",
+        "6xl": "1650px",
       },
       boxShadow: {
         custom: "0px 12px 12px 0px rgba(42, 124, 48, 0.34)",

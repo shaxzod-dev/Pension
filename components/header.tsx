@@ -23,21 +23,21 @@ const Header = () => {
 
   return (
     <header
-      className={
-        burgerOpen == false
-          ? `xs:max-sm:py-2.5 py-5`
-          : "xs:max-sm:py-[25.5px] py-5 md:max-xl:py-[55.5px] sm:max-md:py-[35.5px]"
-      }
+    className={
+      burgerOpen == false
+        ? `xs:max-sm:py-3 py-5 xl:py-7`
+        : "xs:max-sm:py-[27.5px] sm:max-xl:py-[35.5px] py-5"
+    }
     >
       <div className="container">
         <div className="flex items-center justify-between">
           {burgerOpen == false && (
-            <div className="xs:max-md:flex hidden">
+            <div className="xs:max-xl:flex hidden">
               <Icons.SmallLogoIcon />
             </div>
           )}
           {burgerOpen == false && (
-            <div className="md:flex hidden">
+            <div className="xl:flex hidden">
               <Icons.MainLogoIcon />
             </div>
           )}
