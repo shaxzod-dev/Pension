@@ -249,4 +249,40 @@ export const Icons = {
       />
     </svg>
   ),
+  BirdIcon: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={20}
+      height={20}
+      fill="none"
+      {...props}
+    >
+      <defs>
+        <clipPath id="a">
+          <rect
+            width={27}
+            height={27}
+            fill="#fff"
+            fillOpacity={0}
+            rx={-0.5}
+            transform="translate(12.5 12.5)"
+          />
+        </clipPath>
+      </defs>
+      <rect
+        width={27}
+        height={27}
+        fill="none"
+        rx={-0.5}
+        transform="translate(12.5 12.5)"
+      />
+      <g clipPath="url(#a)">
+        <path
+          fill="#71AB28"
+          d="M33.81 20.4c-.47-.47-1.17-.47-1.63 0l-8.75 8.75-3.62-3.62c-.47-.47-1.17-.47-1.63 0-.47.47-.47 1.17 0 1.63l4.43 4.44c.23.23.47.35.82.35s.58-.12.81-.35l9.57-9.57c.47-.47.47-1.17 0-1.63Z"
+        />
+      </g>
+      <circle cx={26} cy={26} r={25.5} stroke="#D1D1D1" />
+    </svg>
+  ),
 };

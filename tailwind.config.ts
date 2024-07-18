@@ -20,6 +20,10 @@ const config = {
     extend: {
       screens: {
         xs: "375px",
+        fh: "400px",
+        ff: "450px",
+        fv: "500px",
+        vf: "550px",
         sm: "600px",
         sd: "700px",
         md: "750px",
