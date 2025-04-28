@@ -11,7 +11,7 @@ const Comfort = () => {
             <h1 className="text-title xl:max-3xl:text-[35px] lg:max-xl:text-[26px] text-[48px] leading-0">
               Мы стремимся создать для вас
               <span className="font-semibold pl-2">
-                комфортные условия проживания
+                      комфортные условия проживания
               </span>
             </h1>
             <div className="mt-6 lg:max-xl:text-lg lg:max-xl:mt-3 text-[rgb(116,116,116)] text-2xl">
