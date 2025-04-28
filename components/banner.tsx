@@ -23,7 +23,7 @@ const Banner = () => {
         <div className="grid grid-cols-1 grid-rows-2 pt-20 pl-10">
           <div className="w-max 6xl:translate-x-[10%] 6xl:translate-y-[40%] text-white xs:max-6xl:absolute xs:max-xl:top-7 xs:max-xl:left-8">
             <h2 className="w-max 6xl:text-[42px] text-[32px] xs:max-sm:text-lg sm:max-md:text-2xl md:max-lg:text-[28px] lg:max-xl:text-[30px]">
-              Подмосковная резиденция
+              Подургенчская резиденция
             </h2>
             <h1 className="w-max 6xl:leading-[71px] 6xl:text-[81px] text-[42px] xs:max-sm:text-2xl sm:max-md:text-[30px] md:max-lg:text-[36px] lg:max-xl:text-[38px]">
               ЛЕСНАЯ УСАДЬБА
